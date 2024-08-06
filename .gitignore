@@ -1,0 +1,90 @@
+# Node modules directory
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Production
+build/
+dist/
+
+# Directory for storing uploaded files
+uploads/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Debugging files
+.DS_Store
+*.local
+
+# IDE specific
+.idea/
+.vscode/
+
+# Optional coverage directory
+coverage/
+
+# Temp files
+tmp/
+temp/
+
+# OS-specific files
+Thumbs.db
+.DS_Store
+
+# TypeScript cache
+*.tsbuildinfo
+
+# TypeScript declaration files
+*.d.ts
+
+# Test coverage files
+coverage/
+.nyc_output/
+
+# Parcel cache
+.cache/
+
+# Next.js build output
+.next/
+
+# Nuxt.js build output
+.nuxt/
+
+# Sapper build output
+__sapper__/
+
+# Gatsby files
+.cache/
+public/
+
+# Serverless directories
+.serverless/
+
+# Firebase
+.firebase/
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# MacOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
