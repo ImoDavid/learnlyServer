@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   fileUpload({
     useTempFiles: true,
-    limits: { fileSize: 6 * 1024 * 1024 }, // Setting file size limit
+    limits: { fileSize: 6 * 1024 * 1024 },
   }),
 );
 
@@ -41,7 +41,7 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'Requested resource not found' });
 });
 
-// Start Server
+
 const startServer = async () => {
   await connectToDB(process.env.MONGODB_URI);
   console.log(`CONNECTED TO DATABASE SUCCESSFULLY.`);

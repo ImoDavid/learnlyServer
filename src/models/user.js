@@ -15,7 +15,7 @@ const userSchema = new Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/\S+@\S+\.\S+/, 'is invalid'], // Email validation regex
+    match: [/\S+@\S+\.\S+/, 'is invalid'], 
   },
   password: {
     type: String,
