@@ -29,13 +29,13 @@
    Example:
 
    ```bash
-   PORT=3000
-   MONGO_URI=mongodb://localhost:27017/taskdb
-   MONGODB_URI=
-   TOKEN_SIGNATURE=
-   CLOUDINARY_SECRET =
-   CLOUD_NAME = d
-   CLOUD_API_KEY =
+   PORT=**********************************************************
+   MONGO_URI=**********************************************************
+   MONGODB_URI=**********************************************************
+   TOKEN_SIGNATURE=**********************************************************
+   CLOUDINARY_SECRET =**********************************************************
+   CLOUD_NAME = **********************************************************
+   CLOUD_API_KEY =**********************************************************
    ```
 
 ## Running the Application
@@ -48,7 +48,7 @@
    npm run start
    ```
 
-   By default, the server will start on `http://localhost:3000`.
+   By default, the server will start on `http://localhost:8000`.
 
 2. **Running in Development Mode:**
 
@@ -71,7 +71,7 @@ Once the server is running, you can view the Swagger documentation in your brows
    Navigate to:
 
    ```
-   http://localhost:3000/docs
+   http://localhost:8000/docs
    ```
 
    This will display the Swagger UI where you can view and test the API endpoints.
