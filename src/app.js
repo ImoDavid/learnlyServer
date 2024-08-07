@@ -11,7 +11,7 @@ dotenv.config();
 import connectToDB from './database/connect.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 // Middlewares
 app.use(express.json());

@@ -4,6 +4,7 @@ import {
   createUser,
   deleteProduct,
   getAllProducts,
+  getProductById,
   updateProduct,
 } from '../controllers/productController.js';
 import auth from '../middleware/auth.js';
@@ -11,6 +12,7 @@ import auth from '../middleware/auth.js';
 const router = Router();
 
 router.get('/products', getAllProducts);
+router.get('/products/:id', auth(), getProductById);
 router.post('/signin', createUser);
 router.post('/add-product', auth(), addProduct);
 router.patch('/products/:id', auth(), updateProduct);
