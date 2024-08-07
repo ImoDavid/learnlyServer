@@ -1,81 +1,286 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Task API Documentation",
-    "description": "API Documentation for Task Management",
+    "title": "Learnly Documentation",
+    "description": "API Documentation for Learnly",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "localhost:8000",
   "basePath": "/api",
   "tags": [
     {
-      "name": "Tasks",
-      "description": "Operations related to tasks"
+      "name": "Users",
+      "description": "Operations related to users"
+    },
+    {
+      "name": "Products",
+      "description": "Operations related to products"
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
-    "/tasks": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
+    "/users": {
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "Create a new user with the specified name, email, and password.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
-                  "example": "any"
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
                 },
-                "completed": {
-                  "example": "any"
+                "email": {
+                  "type": "string",
+                  "example": "john.doe@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123"
                 }
-              }
+              },
+              "required": ["name", "email", "password"]
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "User created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User created successfully"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "jwt-token"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string"
+                      },
+                      "param": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong, try again"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/tasks/{id}": {
-      "patch": {
-        "description": "",
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get all products",
+        "description": "Retrieve a list of all products.",
+        "responses": {
+          "200": {
+            "description": "A list of products",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error fetching products"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Add a new product",
+        "description": "Add a new product with the specified details and an image.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "formData",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Carrot"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Fresh and nutritious"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 7000
+                },
+                "image": {
+                  "type": "file"
+                }
+              },
+              "required": ["name", "description", "price", "image"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product added successfully",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error adding product"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error adding product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get a product by ID",
+        "description": "Retrieve a single product by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the product to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           },
-          {
-            "name": "body",
-            "in": "body",
+          "404": {
+            "description": "Product not found",
             "schema": {
               "type": "object",
               "properties": {
-                "completed": {
-                  "example": "any"
+                "message": {
+                  "type": "string",
+                  "example": "Product not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error fetching product"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Products"],
+        "summary": "Update a product",
+        "description": "Update an existing product by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the product to update"
+          },
+          {
+            "name": "body",
+            "in": "formData",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Carrot"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated description"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 8000
+                },
+                "image": {
+                  "type": "file"
                 }
               }
             }
@@ -83,94 +288,129 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Product updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error updating product"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+            "description": "Product not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product not found"
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error updating product"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Products"],
+        "summary": "Delete a product",
+        "description": "Delete a product by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the product to delete"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Product deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product deleted successfully"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Product not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Product not found"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error deleting product"
+                }
+              }
+            }
           }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "Task": {
-        "type": "object",
-        "required": [
-          "title"
-        ],
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "completed": {
-            "type": "boolean",
-            "default": false
-          }
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Carrot"
+        },
+        "description": {
+          "type": "string",
+          "example": "Fresh and nutritious"
+        },
+        "price": {
+          "type": "number",
+          "example": 7000
+        },
+        "imageURL": {
+          "type": "string",
+          "example": "https://example.com/image.jpg"
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "user-id"
         }
       },
-      "TaskUpdate": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "completed": {
-            "type": "boolean"
-          }
-        }
-      },
-      "TaskID": {
-        "type": "string",
-        "description": "Unique identifier for the task"
-      }
+      "required": ["name", "description", "price"]
     }
   }
 }

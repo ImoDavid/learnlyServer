@@ -1,4 +1,4 @@
-#Learnly API
+## Learnly API
 
 ## Prerequisites
 
